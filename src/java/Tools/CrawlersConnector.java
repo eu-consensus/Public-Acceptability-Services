@@ -29,6 +29,10 @@ public class CrawlersConnector {
     public ArrayList<String> transportKeywords4;
     public ArrayList<String> transportKeywords5;
     public ArrayList<String> transportKeywords6;
+    public ArrayList<String> biofuelKeywords1;
+    public ArrayList<String> biofuelKeywords2;
+    public ArrayList<String> biofuelKeywords3;
+    public ArrayList<String> biofuelKeywords4;
 
     public CrawlersConnector() {
         //Change in Level of Service
@@ -101,6 +105,55 @@ public class CrawlersConnector {
         transportKeywords6.add("national road network");
         transportKeywords6.add("rural network");
         transportKeywords6.add("toll exceptions");
+        
+        //biodiversity
+        biofuelKeywords1=new ArrayList<String>();
+        biofuelKeywords1.add("biodiversity");
+        biofuelKeywords1.add("riparian areas");
+        biofuelKeywords1.add("degraded land");
+        biofuelKeywords1.add("land degration");
+        biofuelKeywords1.add("soil erosion");
+        biofuelKeywords1.add("yield intensification");
+        biofuelKeywords1.add("agricultural intensification");
+        biofuelKeywords1.add("loss species");
+        biofuelKeywords1.add("non-renewable water resources");
+        
+        //CO2 Emissions
+        biofuelKeywords2=new ArrayList<String>();
+        biofuelKeywords2.add("climate change mitigation");
+        biofuelKeywords2.add("environmental pollution fuel");
+        biofuelKeywords2.add("GHG emissions");
+        biofuelKeywords2.add("ILUC");
+        biofuelKeywords2.add("indirect land use change");
+        biofuelKeywords2.add("land use change");
+        biofuelKeywords2.add("land based biofuels");
+        biofuelKeywords2.add("first generation biofuels");
+        biofuelKeywords2.add("advanced biofuels");
+        biofuelKeywords2.add("second generation biofuels");
+        
+        //Forest Land
+        biofuelKeywords3=new ArrayList<String>();
+        biofuelKeywords3.add("conversion forest");
+        biofuelKeywords3.add("soil erosion");
+        biofuelKeywords3.add("deforestation");
+        biofuelKeywords3.add("forest land");
+        biofuelKeywords3.add("forest");
+        biofuelKeywords3.add("trees");
+        biofuelKeywords3.add("degraded land");
+        biofuelKeywords3.add("soil erosion");
+        
+        //Price of Food
+        biofuelKeywords4=new ArrayList<String>();
+        biofuelKeywords4.add("food crops");
+        biofuelKeywords4.add("energy crops");
+        biofuelKeywords4.add("agricultural crops");
+        biofuelKeywords4.add("land rights");
+        biofuelKeywords4.add("land conflicts");
+        biofuelKeywords4.add("land grabbing");
+        biofuelKeywords4.add("food prices");
+        biofuelKeywords4.add("food security");
+        biofuelKeywords4.add("food availability");
+        biofuelKeywords4.add("animal feed co-products");
     }
     
     public ArrayList<String> readScenario(String scenario) throws MalformedURLException, IOException, JSONException{
@@ -113,6 +166,11 @@ public class CrawlersConnector {
             allkeys.addAll(transportKeywords4);
             allkeys.addAll(transportKeywords5);
             allkeys.addAll(transportKeywords6);
+        }else if(scenario.trim().toLowerCase().equals("biofuel")){
+            allkeys.addAll(biofuelKeywords1);
+            allkeys.addAll(biofuelKeywords2);
+            allkeys.addAll(biofuelKeywords3);
+            allkeys.addAll(biofuelKeywords4);
         }
         String keychain="";
         for (int i = 0; i < allkeys.size(); i++) {
@@ -142,15 +200,22 @@ public class CrawlersConnector {
         return res;
     }
     
-    public ArrayList<String> readObjective(int objective) throws MalformedURLException, IOException, JSONException{
+    public ArrayList<String> readObjective(String scenario,int objective) throws MalformedURLException, IOException, JSONException{
         ArrayList<String> res=new ArrayList<String>();
         ArrayList<String> allkeys=new ArrayList<String>();
-        if(objective==1){allkeys=transportKeywords1;}
-        else if(objective==2){allkeys=transportKeywords2;}
-        else if(objective==3){allkeys=transportKeywords3;}
-        else if(objective==4){allkeys=transportKeywords4;}
-        else if(objective==5){allkeys=transportKeywords5;}
-        else if(objective==6){allkeys=transportKeywords6;}
+        if(scenario.trim().toLowerCase().equals("transportation")){
+            if(objective==1){allkeys=transportKeywords1;}
+            else if(objective==2){allkeys=transportKeywords2;}
+            else if(objective==3){allkeys=transportKeywords3;}
+            else if(objective==4){allkeys=transportKeywords4;}
+            else if(objective==5){allkeys=transportKeywords5;}
+            else if(objective==6){allkeys=transportKeywords6;}
+        }else if(scenario.trim().toLowerCase().equals("biofuel")){
+            if(objective==1){allkeys=biofuelKeywords1;}
+            else if(objective==2){allkeys=biofuelKeywords2;}
+            else if(objective==3){allkeys=biofuelKeywords3;}
+            else if(objective==4){allkeys=biofuelKeywords4;}
+        } 
         
         String keychain="";
         for (int i = 0; i < allkeys.size(); i++) {

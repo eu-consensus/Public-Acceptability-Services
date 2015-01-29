@@ -82,7 +82,12 @@ public class Scoresservice {
             else if(objective==4){keys=ccn.transportKeywords4;}
             else if(objective==5){keys=ccn.transportKeywords5;}
             else if(objective==6){keys=ccn.transportKeywords6;}
-        }
+        }else if(scenario.trim().toLowerCase().equals("biofuel")){
+            if(objective==1){keys=ccn.biofuelKeywords1;}
+            else if(objective==2){keys=ccn.biofuelKeywords2;}
+            else if(objective==3){keys=ccn.biofuelKeywords3;}
+            else if(objective==4){keys=ccn.biofuelKeywords4;}
+        } 
         System.out.println("Calculating Score Of Frequency...");
         TopicAnalysisTools tat = new TopicAnalysisTools();
         ArrayList<Double> sofs = new ArrayList<Double>();
@@ -136,7 +141,7 @@ public class Scoresservice {
         return "<xml><result>"+sucCount+" of "+keys.size()+" records successfully stored in database.</result></xml>";
     }
     
-  /*  public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String scenario="transportation";
         int objective=3;
         

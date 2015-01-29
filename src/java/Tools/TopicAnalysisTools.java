@@ -372,10 +372,16 @@ public class TopicAnalysisTools {
     public Double countFrequency(ArrayList<String> texts, String keyphrase){
         Double res=0.0;
         keyphrase=keyphrase.toLowerCase().trim();
+        String[] keys=keyphrase.split(" ");
+        int found=0;
         for (int i = 0; i < texts.size(); i++) {
-            if(texts.get(i).toLowerCase().contains(keyphrase)){
-                res++;
+            found=0;
+            for (int j = 0; j < keys.length; j++) {
+                if(texts.get(i).toLowerCase().contains(keys[j])){
+                    found++;
+                }
             }
+            if(found==keys.length){res++;}
         }
         if(texts.size()>0){
             res=res/texts.size();
