@@ -23,6 +23,3 @@ Java(TM) SE Runtime Environment 1.7.0_45-b18
 Windows 7 version 6.1
 GlassFish Server Open Source Edition 4.1 (build 13)
 MySql Version 14.14 Distribution 5.5.40 for debian-linux-gnu (x86_64)
-
-
-For more information please contact me at vpsomak@mail.ntua.gr
