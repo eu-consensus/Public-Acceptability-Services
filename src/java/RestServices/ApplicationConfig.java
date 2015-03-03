@@ -30,8 +30,10 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(RestServices.Aggregate.class);
+        resources.add(RestServices.GetDaily.class);
         resources.add(RestServices.Scoresfile.class);
         resources.add(RestServices.Scoresservice.class);
+        resources.add(RestServices.Scoresserviceall.class);
         resources.add(RestServices.Scoresxml.class);
     }
     
