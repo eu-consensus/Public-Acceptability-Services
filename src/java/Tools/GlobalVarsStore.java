@@ -16,7 +16,7 @@ public class GlobalVarsStore {
     //public static String databasePassword="PASSWORD";
     //public static String databaseServer="jdbc:mysql://SERVER_IP/DATABASE";
     //public static String databaseDriver=null; /*DATABASE DRIVER or NULL*/
-    public static String databasePool="consensus_pool_resource";
+    public static String databasePool="consensus_resource";
     public static String trainDataDir = "/trainData/";
     
     //System Variables

@@ -53,7 +53,7 @@ public class TopicAnalysisTools {
                     }
                 }
             }
-            System.out.println("Completion: "+((double)i/(pos.size()+neg.size()))*100+"%");
+            //System.out.println("Completion: "+((double)i/(pos.size()+neg.size()))*100+"%");
         }
         for (int i = 0; i < neg.size(); i++) {
             String[] bag=neg.get(i).split("(?:(?:[^a-zA-Z]+')|(?:'[^a-zA-Z]+))|(?:[^a-zA-Z']+)");
@@ -87,7 +87,7 @@ public class TopicAnalysisTools {
                     }
                 }
             }
-            System.out.println("Completion: "+((double)(i+pos.size())/(pos.size()+neg.size()))*100+"%");
+            //System.out.println("Completion: "+((double)(i+pos.size())/(pos.size()+neg.size()))*100+"%");
         }
         for (int i = 0; i < posWordsFreq.size(); i++) {
             posWordsSum.add((int)Math.round(posWordsFreq.get(i)));
@@ -193,7 +193,7 @@ public class TopicAnalysisTools {
                     }
                 }
             }
-            System.out.println("Completion: "+((double)i/(pos.size()+neg.size()))*100+"%");
+            //System.out.println("Completion: "+((double)i/(pos.size()+neg.size()))*100+"%");
         }
         for (int i = 0; i < neg.size(); i++) {
             String[] bag=neg.get(i).split("(?:(?:[^a-zA-Z]+')|(?:'[^a-zA-Z]+))|(?:[^a-zA-Z']+)");
@@ -209,7 +209,7 @@ public class TopicAnalysisTools {
                     }
                 }
             }
-            System.out.println("Completion: "+((double)(i+pos.size())/(pos.size()+neg.size()))*100+"%");
+            //System.out.println("Completion: "+((double)(i+pos.size())/(pos.size()+neg.size()))*100+"%");
         }
         for (int i = 0; i < posWordsFreq.size(); i++) {
             posWordsFreq.set(i,posWordsFreq.get(i)/totalPos);
@@ -318,7 +318,7 @@ public class TopicAnalysisTools {
                     }
                 }
             }
-            System.out.println("Completion: "+((double)i/(texts.size()))*100+"%");
+            //System.out.println("Completion: "+((double)i/(texts.size()))*100+"%");
         }
         System.out.println("Sorting...");
         String[][] Keys=new String[Words.size()][3];
@@ -387,7 +387,7 @@ public class TopicAnalysisTools {
             res=res/texts.size();
             return res;
         }else{
-            return null;
+            return 0.0;
         }
     }
      

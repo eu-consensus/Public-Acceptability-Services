@@ -172,32 +172,32 @@ public class CrawlersConnector {
             allkeys.addAll(biofuelKeywords3);
             allkeys.addAll(biofuelKeywords4);
         }
-        String keychain="";
+        //String keychain="";
         for (int i = 0; i < allkeys.size(); i++) {
-            keychain+=allkeys.get(i)+",";
+            Date now=new Date();
+            Calendar c = Calendar.getInstance(); 
+            c.setTime(now); 
+            c.add(Calendar.MONTH, -6);
+            Date before6months=c.getTime();
+            String url="http://consensus.atc.gr:8080/mongo-handler/rest/search?keywords="+allkeys.get(i)+"-link&time="+before6months.getTime();
+            url=url.replace(" ","%20");
+            InputStream is = new URL(url).openStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String text="";
+            String line="";
+            while((line=rd.readLine()) != null){
+                text+=line;
+            }
+
+            JSONArray as=new JSONArray(text);
+            for (int j = 0; j < as.length(); j++) {
+                res.add(((JSONObject)as.get(j)).getString("title"));
+            }
         }
-        keychain=keychain.substring(0,keychain.length()-1);
-        Date now=new Date();
-        Calendar c = Calendar.getInstance(); 
-        c.setTime(now); 
-        c.add(Calendar.MONTH, -6);
-        Date before6months=c.getTime();
-        String url="http://consensus.atc.gr:8080/mongo-handler/rest/search?keywords="+keychain+"&time="+before6months.getTime();
-        url=url.replace(" ","%20");
-        InputStream is = new URL(url).openStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        String text="";
-        String line="";
-        while((line=rd.readLine()) != null){
-            text+=line;
-        }
+        //keychain=keychain.substring(0,keychain.length()-1);
         
-        JSONArray as=new JSONArray(text);
-        for (int i = 0; i < as.length(); i++) {
-            res.add(((JSONObject)as.get(i)).getString("title"));
-        }
         
-        return res;
+        return clearURLS(res);
     }
     
     public ArrayList<String> readObjective(String scenario,int objective) throws MalformedURLException, IOException, JSONException{
@@ -242,7 +242,7 @@ public class CrawlersConnector {
             res.add(((JSONObject)as.get(i)).getString("title"));
         }
         
-        return res;
+        return clearURLS(res);
     }
     
     public ArrayList<String> readKeyword(String keyword) throws MalformedURLException, IOException, JSONException{
@@ -267,6 +267,17 @@ public class CrawlersConnector {
             res.add(((JSONObject)as.get(i)).getString("title"));
         }
         
-        return res;
+        return clearURLS(res);
+    }
+    
+    private ArrayList<String> clearURLS(ArrayList<String> data){
+        for (int i = 0; i < data.size(); i++) {
+            String cur=data.get(i);
+            if(cur.indexOf("http://")>=0 || cur.indexOf("https://")>=0){
+                data.remove(i);
+                i--;
+            }
+        }
+        return data;
     }
 }
