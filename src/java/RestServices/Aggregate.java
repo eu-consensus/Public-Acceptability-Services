@@ -42,12 +42,19 @@ public class Aggregate {
     @Produces("application/json")
     public String getJson(@QueryParam("scenario") String scenario, @QueryParam("objective") Integer objective) {
         ArrayList<String> objectiveNames=new ArrayList<String>();
-        objectiveNames.add("Change in Level of Service");
-        objectiveNames.add("% change of Accidents cost");
-        objectiveNames.add("% change of Air pollution (external) cost");
-        objectiveNames.add("% change of Noise (external) cost");
-        objectiveNames.add("User convenience in using the RP system");
-        objectiveNames.add("Availability of alternative routes and modes");
+        if(scenario.equalsIgnoreCase("transportation")){
+            objectiveNames.add("Change in Level of Service");
+            objectiveNames.add("% change of Accidents cost");
+            objectiveNames.add("% change of Air pollution (external) cost");
+            objectiveNames.add("% change of Noise (external) cost");
+            objectiveNames.add("User convenience in using the RP system");
+            objectiveNames.add("Availability of alternative routes and modes");
+        }else if(scenario.equalsIgnoreCase("biofuel")){
+            objectiveNames.add("Biodiversity");
+            objectiveNames.add("CO2 Emissions");
+            objectiveNames.add("Forest Land");
+            objectiveNames.add("Price of Food");
+        }
         
         databaseHandler dbh=new databaseHandler();
         ArrayList<Double[]> scores=dbh.readObjectiveScores(scenario, objective);

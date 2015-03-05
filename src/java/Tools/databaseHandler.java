@@ -184,10 +184,17 @@ public class databaseHandler {
    }
    
    public String readDailyLogs(String scenario, Integer objective){
+       ArrayList<String> objectiveNames=new ArrayList<String>();
        String res="";
        CrawlersConnector ccn=new CrawlersConnector();
        ArrayList<String> keys=null;
         if(scenario.equalsIgnoreCase("transportation")){
+            objectiveNames.add("Change in Level of Service");
+            objectiveNames.add("% change of Accidents cost");
+            objectiveNames.add("% change of Air pollution (external) cost");
+            objectiveNames.add("% change of Noise (external) cost");
+            objectiveNames.add("User convenience in using the RP system");
+            objectiveNames.add("Availability of alternative routes and modes");
             if(objective==1){keys=ccn.transportKeywords1;}
             else if(objective==2){keys=ccn.transportKeywords2;}
             else if(objective==3){keys=ccn.transportKeywords3;}
@@ -195,6 +202,10 @@ public class databaseHandler {
             else if(objective==5){keys=ccn.transportKeywords5;}
             else if(objective==6){keys=ccn.transportKeywords6;}
         }else if(scenario.equalsIgnoreCase("biofuel")){
+            objectiveNames.add("Biodiversity");
+            objectiveNames.add("CO2 Emissions");
+            objectiveNames.add("Forest Land");
+            objectiveNames.add("Price of Food");
             if(objective==1){keys=ccn.biofuelKeywords1;}
             else if(objective==2){keys=ccn.biofuelKeywords2;}
             else if(objective==3){keys=ccn.biofuelKeywords3;}
@@ -217,7 +228,10 @@ public class databaseHandler {
            String sql = "SELECT * FROM PublicAcceptabilityScoresDaily "+keyChain;
            ResultSet rs = stmt.executeQuery(sql);
            try{
-            res=convertDailyLogs(rs).toString();
+            JSONObject objName=new JSONObject();
+            objName.put("Scenario", scenario);
+            objName.put("Objective", objectiveNames.get(objective-1));
+            res=convertDailyLogs(rs).put(objName).toString();
            }catch(Exception ex){res=ex.getMessage();}
            stmt.close();
            conn.close();
