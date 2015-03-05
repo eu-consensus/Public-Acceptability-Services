@@ -177,7 +177,7 @@ public class CrawlersConnector {
             Date now=new Date();
             Calendar c = Calendar.getInstance(); 
             c.setTime(now); 
-            c.add(Calendar.MONTH, -6);
+            c.add(Calendar.DATE, -2);
             Date before6months=c.getTime();
             String url="http://consensus.atc.gr:8080/mongo-handler/rest/search?keywords="+allkeys.get(i)+"-link&time="+before6months.getTime();
             url=url.replace(" ","%20");
@@ -225,7 +225,7 @@ public class CrawlersConnector {
         Date now=new Date();
         Calendar c = Calendar.getInstance(); 
         c.setTime(now); 
-        c.add(Calendar.MONTH, -6);
+        c.add(Calendar.DATE, -2);
         Date before6months=c.getTime();
         String url="http://consensus.atc.gr:8080/mongo-handler/rest/search?keywords="+keychain+"&time="+before6months.getTime();
         url=url.replace(" ","%20");
@@ -250,7 +250,7 @@ public class CrawlersConnector {
         Date now=new Date();
         Calendar c = Calendar.getInstance(); 
         c.setTime(now); 
-        c.add(Calendar.MONTH, -6);
+        c.add(Calendar.DATE, -2);
         Date before6months=c.getTime();
         String url="http://consensus.atc.gr:8080/mongo-handler/rest/search?keywords="+keyword+"&time="+before6months.getTime();
         url=url.replace(" ","%20");
