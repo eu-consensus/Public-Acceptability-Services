@@ -133,6 +133,11 @@ public class databaseHandler {
             else if(objective==4){keys=ccn.transportKeywords4;}
             else if(objective==5){keys=ccn.transportKeywords5;}
             else if(objective==6){keys=ccn.transportKeywords6;}
+        }else if(scenario.equalsIgnoreCase("biofuel")){
+            if(objective==1){keys=ccn.biofuelKeywords1;}
+            else if(objective==2){keys=ccn.biofuelKeywords2;}
+            else if(objective==3){keys=ccn.biofuelKeywords3;}
+            else if(objective==4){keys=ccn.biofuelKeywords4;}
         }
         String keyChain="WHERE Keyword = '";
         int i;
