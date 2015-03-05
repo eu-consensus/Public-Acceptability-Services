@@ -87,9 +87,7 @@ public class Scoresservice {
             else if(objective==2){keys=ccn.biofuelKeywords2;}
             else if(objective==3){keys=ccn.biofuelKeywords3;}
             else if(objective==4){keys=ccn.biofuelKeywords4;}
-        }else{
-            return "Policy not defined. Available scenarios: 'transportation' and 'biofuel'.";
-        }
+        } 
         System.out.println("Calculating Score Of Frequency...");
         TopicAnalysisTools tat = new TopicAnalysisTools();
         ArrayList<Double> sofs = new ArrayList<Double>();
@@ -101,6 +99,9 @@ public class Scoresservice {
             sof+=sofs.get(i);
         }
         if(sofs.size()>0) sof=sof/sofs.size();
+        if (sof == 0.0) {
+            return "<xml><result>Source not accessible or empty.</result></xml>";
+        }
         System.out.println("Score of Frequency for objective '" + objectiveNames.get(objective-1) + "' is " + df.format(sof));
 
         //Calculating SOS
@@ -140,9 +141,9 @@ public class Scoresservice {
         return "<xml><result>"+sucCount+" of "+keys.size()+" records successfully stored in database.</result></xml>";
     }
     
-    public static void main(String[] args) {
-        String scenario="biofuel";
-        int objective=1;
+    /*public static void main(String[] args) {
+        String scenario="transportation";
+        int objective=3;
         
         //Reading source file
         CrawlersConnector ccn=new CrawlersConnector();
@@ -173,11 +174,6 @@ public class Scoresservice {
             else if(objective==4){keys=ccn.transportKeywords4;}
             else if(objective==5){keys=ccn.transportKeywords5;}
             else if(objective==6){keys=ccn.transportKeywords6;}
-        }else if(scenario.equalsIgnoreCase("biofuel")){
-            if(objective==1){keys=ccn.biofuelKeywords1;}
-            else if(objective==2){keys=ccn.biofuelKeywords2;}
-            else if(objective==3){keys=ccn.biofuelKeywords3;}
-            else if(objective==4){keys=ccn.biofuelKeywords4;}
         }
         System.out.println("Calculating Score Of Frequency...");
         TopicAnalysisTools tat = new TopicAnalysisTools();
@@ -190,6 +186,9 @@ public class Scoresservice {
             sof+=sofs.get(i);
         }
         if(sofs.size()>0) sof=sof/sofs.size();
+        if (sof == 0.0) {
+            System.out.println("<xml><result>Source not accessible or empty.</result></xml>");
+        }
         System.out.println("Score of Frequency for objective '" + objectiveNames.get(objective-1) + "' is " + df.format(sof));
 
         //Calculating SOS

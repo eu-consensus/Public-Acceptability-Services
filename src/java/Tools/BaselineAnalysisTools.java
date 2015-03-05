@@ -33,14 +33,14 @@ public class BaselineAnalysisTools {
         int negCount=0;
         ArrayList<Double> sents=new ArrayList<Double>();
         int step=(int)Math.round((double)texts.size()/100);
-        //int completion=0;
+        int completion=0;
         for (int j = 0; j < texts.size(); j++) {
-            /*if(step>0){
+            if(step>0){
                 if(j%step==0) {
                     completion++;
                     System.out.println("Completion - "+completion+"%");
                 }
-            }*/
+            }
             String[] bag=texts.get(j).split("(?:(?:[^a-zA-Z]+')|(?:'[^a-zA-Z]+))|(?:[^a-zA-Z']+)");
             //DecimalFormat df = new DecimalFormat("#.####");
             ArrayList<Double> weights=new ArrayList<Double>();
