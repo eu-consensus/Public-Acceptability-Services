@@ -4,6 +4,10 @@
  */
 package Tools;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,16 +18,10 @@ import java.util.Date;
  */
 public class BaselineAnalysisTools {
     public void prepareTools(){
-        if(GlobalVarsStore.swn==null){
-            System.out.println(GlobalVarsStore.printTime(new Date())+": Parsing wordNet... ");
-            GlobalVarsStore.swn=new Tools.SentiWordNet();
-            GlobalVarsStore.swn.populate(GlobalVarsStore.trainDataDir+"SentiWordNet_3.0.0_20130122.txt"); //load the SentiWordNet to memory
-            System.out.println(GlobalVarsStore.printTime(new Date())+": WordNet parsed for "+GlobalVarsStore.swn.getWordCount()+" words. ");
-        }else if(GlobalVarsStore.swn.getWordCount()<1){
-            System.out.println(GlobalVarsStore.printTime(new Date())+": Parsing wordNet... ");
-            GlobalVarsStore.swn=new SentiWordNet();
-            GlobalVarsStore.swn.populate(GlobalVarsStore.trainDataDir+"SentiWordNet_3.0.0_20130122.txt"); //load the SentiWordNet to memory
-            System.out.println(GlobalVarsStore.printTime(new Date())+": WordNet parsed for "+GlobalVarsStore.swn.getWordCount()+" words. ");
+        if(GlobalVarsStore.lexicon.equals("wordnet")){
+            GlobalVarsStore.trainLexicon("wordnet",GlobalVarsStore.trainDataDir+"SentiWordNet_3.0.0_20130122.txt");
+        }else if(GlobalVarsStore.lexicon.equals("afinn")){
+            GlobalVarsStore.trainLexicon("afinn",GlobalVarsStore.trainDataDir+"AFINN-111.txt");
         }
     }
     
@@ -45,7 +43,7 @@ public class BaselineAnalysisTools {
             //DecimalFormat df = new DecimalFormat("#.####");
             ArrayList<Double> weights=new ArrayList<Double>();
             for (int i = 0; i < bag.length; i++) {
-                Double res=GlobalVarsStore.swn.testWord(bag[i]);  
+                Double res=GlobalVarsStore.lex.testWord(bag[i]);  
                 if(res!=null){
                     weights.add(res);
                 }
@@ -58,6 +56,13 @@ public class BaselineAnalysisTools {
                 totalSent=totalSent/weights.size();
                 sents.add(totalSent);
             }
+            try {
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ratedTweets.csv", true)));
+                out.println(totalSent+"\t"+texts.get(j));
+                out.close();
+            } catch (IOException e) {
+                //exception handling left as an exercise for the reader
+            }
         }
         for (int i = 0; i < sents.size(); i++) {
             if(sents.get(i)>GlobalVarsStore.threshold[1]) posCount++;
@@ -67,7 +72,6 @@ public class BaselineAnalysisTools {
         System.out.println(posCount+" - "+neuCount+" - "+negCount);
         if(posCount+neuCount+negCount > 0)
         return ((double)posCount+(-1*negCount))/((double)posCount+neuCount+negCount); //return aggrevated score
-        else
-        return 0.0;
+        else return 0.0;
     }
 }
